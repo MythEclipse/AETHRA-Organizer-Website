@@ -215,26 +215,23 @@
         </section>
 
         <section class="about py-12 px-4 md:px-[9%]" id="about">
-            <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold"><span>about</span> us</h1>
-            <div class="flex items-center flex-wrap gap-8">
-                <div class="flex-1 basis-full lg:basis-5/12">
-                    <img src="images/about-img.jpg" alt=""
-                        class="w-full rounded-lg border-[1rem] border-gray-800">
-                </div>
-                <div class="flex-1 basis-full lg:basis-6/12">
-                    <h3 class="text-4xl text-white font-bold">we will give a very special celebration for you</h3>
-                    <p class="text-lg text-gray-300 py-4 leading-loose">Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ullam labore fugiat ut esse perferendis perspiciatis provident dolores fuga in
-                        facilis culpa possimus, quia praesentium itaque, sapiente quasi harum rem asperiores.</p>
-                    <p class="text-lg text-gray-300 leading-loose">Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Fugiat vero expedita incidunt provident quibusdam aut odit, numquam nesciunt similique
-                        nisi.</p>
-                    <a href="#contact"
-                        class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">contact
-                        us</a>
-                </div>
-            </div>
-        </section>
+    <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold"><span>about</span> us</h1>
+    <div class="flex items-center flex-wrap gap-8">
+        <div class="flex-1 basis-full lg:basis-5/12">
+            @if($about && $about->image)
+            <img src="{{ Storage::url($about->image) }}" alt="About Aethra Organizer"
+                 class="w-full rounded-lg border-[1rem] border-gray-800 object-cover aspect-[4/3]">
+            @endif
+        </div>
+        <div class="flex-1 basis-full lg:basis-6/12">
+            <h3 class="text-4xl text-white font-bold">{{ $about->headline ?? '' }}</h3>
+            <p class="text-lg text-gray-300 py-4 leading-loose">{{ $about->paragraph_1 ?? '' }}</p>
+            <p class="text-lg text-gray-300 leading-loose">{{ $about->paragraph_2 ?? '' }}</p>
+            <a href="#contact"
+               class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">contact us</a>
+        </div>
+    </div>
+</section>
 
         <section class="gallery py-12 px-4 md:px-[9%]" id="gallery">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span

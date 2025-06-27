@@ -8,6 +8,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\Admin\AboutController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -39,5 +40,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('services', [ServiceController::class, 'index'])->name('services.index');
     Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
+
+    Route::get('about', [AboutController::class, 'index'])->name('about.index');
+    Route::put('about', [AboutController::class, 'update'])->name('about.update');
 });
 require __DIR__ . '/auth.php';

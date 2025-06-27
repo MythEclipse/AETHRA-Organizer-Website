@@ -37,8 +37,15 @@
                 <p>Edit Deskripsi Layanan</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.about.index') }}"
+                class="nav-link {{ request()->is('admin/about*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-info-circle"></i>
+                <p>Edit About Us</p>
+            </a>
+        </li>
     @endcan
-    <li class="nav-header">AKUN</li>
+    {{-- <li class="nav-header">AKUN</li>
 
     <li class="nav-item">
         <a href="{{ route('profile.edit') }}"
@@ -46,6 +53,6 @@
             <i class="nav-icon fas fa-user"></i>
             <p>Profil</p>
         </a>
-    </li>
+    </li> --}}
 
 </ul>
