@@ -9,10 +9,10 @@
             <div class="flex flex-col md:flex-row gap-6">
 
                 {{-- Kolom Kiri: Sidebar Menu Pengguna --}}
-                <div class="w-full md:w-1/4">
+                {{-- <div class="w-full md:w-1/4"> --}}
                     {{-- File sidebar ini tidak perlu diubah --}}
-                    @include('layouts.partials.user-sidebar')
-                </div>
+                    {{-- @include('layouts.partials.user-sidebar') --}}
+                {{-- </div> --}}
 
                 {{-- Kolom Kanan: Konten Utama --}}
                 <div class="w-full md:w-3/4">
