@@ -15,4 +15,8 @@ class Paket extends Model
     {
         return $this->belongsToMany(Fitur::class, 'fitur_paket');
     }
+    public function transaksis()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

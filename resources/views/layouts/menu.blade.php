@@ -30,4 +30,12 @@
             <p>Profil</p>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a href="{{ route('admin.transaksis.index') }}"
+            class="nav-link {{ request()->is('admin/transaksis*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <p>Manajemen Transaksi</p>
+        </a>
+    </li>
 </ul>

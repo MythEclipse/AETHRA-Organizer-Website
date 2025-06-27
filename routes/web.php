@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FiturController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\TransaksiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,5 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('fiturs', FiturController::class);
     Route::resource('pakets', PaketController::class);
 });
-
-require __DIR__.'/auth.php';
+Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
+        Route::get('transaksis/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.show');
+        Route::put('transaksis/{transaksi}/status', [TransaksiController::class, 'updateStatus'])->name('transaksis.updateStatus');
+    });
+require __DIR__ . '/auth.php';
