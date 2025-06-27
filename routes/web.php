@@ -7,7 +7,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LandingController;
-use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\ServiceController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 

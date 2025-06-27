@@ -1,6 +1,6 @@
 /* 1. Impor gaya dasar dari Swiper */
-@import 'swiper/css';
-@import 'swiper/css/effect-coverflow';
+/* @import 'swiper/css'; */
+/* @import 'swiper/css/effect-coverflow'; */
 
 /* 2. Impor directive dasar Tailwind */
 @tailwind base;

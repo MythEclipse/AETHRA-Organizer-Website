@@ -30,11 +30,19 @@
                 <p>Manajemen Transaksi</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.services.index') }}"
+                class="nav-link {{ request()->is('admin/services*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-concierge-bell"></i>
+                <p>Edit Deskripsi Layanan</p>
+            </a>
+        </li>
     @endcan
     <li class="nav-header">AKUN</li>
 
     <li class="nav-item">
-        <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+        <a href="{{ route('profile.edit') }}"
+            class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user"></i>
             <p>Profil</p>
         </a>
