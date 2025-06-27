@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'profile_photo_path',
     ];
 
     /**
@@ -49,5 +51,15 @@ class User extends Authenticatable
     public function transaksis()
     {
         return $this->hasMany(Transaksi::class);
+    }
+     public function getProfilePhotoUrlAttribute()
+    {
+        if ($this->profile_photo_path) {
+            // Jika ada path foto di database, kembalikan URLnya dari storage
+            return Storage::url($this->profile_photo_path);
+        }
+
+        // Jika tidak ada, kembalikan URL default dari ui-avatars
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
     }
 }
