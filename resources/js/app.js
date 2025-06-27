@@ -1,55 +1,95 @@
 import './bootstrap';
 
 import Alpine from 'alpinejs';
-import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
-// import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 window.Alpine = Alpine;
+
+import Swiper from 'swiper';
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+
 document.addEventListener('DOMContentLoaded', function () {
-    var swiper = new Swiper(".home-slider", {
+
+    // Inisialisasi untuk Home Slider (Efek Coverflow)
+    const homeSlider = new Swiper(".home-slider", {
+        modules: [Autoplay, EffectCoverflow], // <-- Daftarkan modul yang digunakan
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: "auto",
-        initialSlide: 1,
+        loop: true,
         coverflowEffect: {
-            rotate: 20,    // Tetap dengan rotasi untuk efek miring
-            stretch: -20,  // <--- UBAH INI: Berikan nilai negatif untuk membuat slide berdempet
-            depth: 250,    // Tetap dengan kedalaman untuk efek "di belakang"
-            modifier: 1,   // Tetap dengan modifier
+            rotate: 20,
+            stretch: -20, // Nilai negatif agar slide saling berdekatan
+            depth: 250,
+            modifier: 1,
             slideShadows: true,
         },
-        loop: true,
         autoplay: {
-            delay: 1000,
+            delay: 3500, // <-- Disesuaikan agar tidak terlalu cepat
             disableOnInteraction: false,
         },
     });
 
-    var swiper2 = new Swiper(".review-slider", {
+    // Inisialisasi untuk Review Slider
+    const reviewSlider = new Swiper(".review-slider", {
+        modules: [Autoplay, Pagination], // <-- Daftarkan modul yang digunakan
         slidesPerView: 1,
         grabCursor: true,
         loop: true,
-        centeredSlides: true,
-        initialSlide: 1,
-        spaceBetween: 10,
+        spaceBetween: 20, // Memberi jarak antar slide
+        pagination: {
+            el: '.swiper-pagination', // <-- Menghubungkan ke elemen pagination di HTML
+            clickable: true,
+        },
         breakpoints: {
-            0: {
-                slidesPerView: 1,
-            },
-            700: {
+            640: { // Untuk layar > 640px
                 slidesPerView: 2,
             },
-            1050: {
+            1024: { // Untuk layar > 1024px
                 slidesPerView: 3,
             },
         },
         autoplay: {
-            delay: 1000,
+            delay: 4000, // <-- Disesuaikan agar tidak terlalu cepat
             disableOnInteraction: false,
         }
     });
+
+    // Kode untuk Mobile Menu & Theme Toggler dari sebelumnya
+    // (Jika Anda menaruhnya di sini)
+    const menuBars = document.getElementById('menu-bars');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if(menuBars && mobileMenu) {
+        menuBars.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuBars.querySelector('i').classList.toggle('fa-bars');
+            menuBars.querySelector('i').classList.toggle('fa-times');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBars.querySelector('i').classList.add('fa-bars');
+                menuBars.querySelector('i').classList.remove('fa-times');
+            });
+        });
+    }
+
+    const themeToggler = document.getElementById('theme-toggler');
+    const toggleBtn = document.getElementById('toggle-btn');
+    if(themeToggler && toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            themeToggler.classList.toggle('-right-full');
+            themeToggler.classList.toggle('right-0');
+        });
+
+        document.querySelectorAll('.theme-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const color = button.style.backgroundColor;
+                document.documentElement.style.setProperty('--main-color', color);
+            });
+        });
+    }
 });

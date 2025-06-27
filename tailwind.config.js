@@ -10,12 +10,16 @@ export default {
     ],
 
     theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-        },
+    extend: {
+      colors: {
+        primary: 'var(--main-color)', // Menggunakan variabel CSS untuk warna tema
+      },
+      fontFamily: {
+        // Menggunakan font 'Instrument Sans' seperti di file asli
+        sans: ['"Instrument Sans"', 'sans-serif'],
+      }
     },
+  },
 
     plugins: [forms],
 };

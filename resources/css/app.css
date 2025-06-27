@@ -1,51 +1,44 @@
+/* 1. Impor gaya dasar dari Swiper */
+@import 'swiper/css';
+@import 'swiper/css/effect-coverflow';
+
+/* 2. Impor directive dasar Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'swiper/css';
-@import 'swiper/css/effect-coverflow'
-.swiper-slide {
-    transition: opacity 0.3s ease-in-out; /* Tambahkan transisi halus */
+
+/* 3. Tambahkan gaya kustom Anda di dalam @layer */
+@layer components {
+    /* Gaya untuk slider di section 'home' */
+    .home-slider .swiper-slide {
+        transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    }
+
+    /* Membuat slide yang tidak aktif menjadi lebih pudar dan kecil */
+    .home-slider .swiper-slide:not(.swiper-slide-active) {
+        opacity: 0.6;
+        transform: scale(0.85);
+    }
 }
 
-/* Slide yang tidak aktif (di samping slide aktif) */
-.home-slider .swiper-slide:not(.swiper-slide-active) {
-    opacity: 0.7; /* Mengurangi opacity agar terlihat lebih di belakang */
-    /* Anda bisa bereksperimen dengan opacity, misalnya 0.5 atau 0.6 */
+/* 4. Gaya Global (Root variables dan scrollbar) */
+:root {
+    --main-color: #3867d6; /* Warna tema utama */
 }
 
-/* Anda juga bisa menambahkan scale untuk slide yang tidak aktif */
-.home-slider .swiper-slide:not(.swiper-slide-active) {
-    transform: scale(0.9); /* Sedikit mengecilkan slide yang tidak aktif */
-    /* Ini akan bekerja bersama dengan coverflowEffect */
-}
-.swiper {
-    width: 100%;
-    height: 500px; /* Sesuaikan tinggi sesuai kebutuhan */
-}
-.swiper-slide {
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* Tambahkan transisi */
-}
-.swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+html {
+    scroll-behavior: smooth;
 }
 
-/* Gaya untuk slide yang tidak aktif agar terlihat 'di belakang' */
-.home-slider .swiper-slide:not(.swiper-slide-active) {
-    opacity: 0.6; /* Contoh: buat lebih pudar */
-    transform: scale(0.9); /* Contoh: sedikit mengecilkan */
+html::-webkit-scrollbar {
+    width: 1rem;
 }
 
-/* Swiper juga menambahkan kelas untuk slide yang berada di kiri/kanan slide aktif */
-.home-slider .swiper-slide-prev,
-.home-slider .swiper-slide-next {
-    /* Anda bisa menambahkan gaya spesifik jika efek coverflow saja tidak cukup */
-    /* Misalnya, sedikit lebih jauh lagi jika diinginkan */
-    /* transform: translate3d(-Xpx, Ypx, Zpx) rotateY(Deg) scale(Factor); */
+html::-webkit-scrollbar-track {
+    background: #1f2937; /* Tailwind's bg-gray-800 */
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 9999px;
 }
