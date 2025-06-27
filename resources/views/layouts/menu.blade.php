@@ -6,7 +6,24 @@
         </a>
     </li>
 
-    {{-- Tambahkan item menu lain di sini --}}
+    <li class="nav-header">MANAJEMEN KONTEN</li>
+
+    <li class="nav-item">
+        <a href="{{ route('fiturs.index') }}" class="nav-link {{ request()->is('fiturs*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-star"></i>
+            <p>Manajemen Fitur</p>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{{ route('pakets.index') }}" class="nav-link {{ request()->is('pakets*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-box-open"></i>
+            <p>Manajemen Paket</p>
+        </a>
+    </li>
+
+    <li class="nav-header">AKUN</li>
+
     <li class="nav-item">
         <a href="{{ route('profile.edit') }}" class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user"></i>
