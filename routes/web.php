@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FiturController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\LandingController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -21,14 +21,19 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('fiturs', FiturController::class);
     Route::resource('pakets', PaketController::class);
+
+    Route::get('/checkout/{paket}', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    Route::get('/my-transactions', [CheckoutController::class, 'myTransactions'])->name('my-transactions');
 });
 Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
-        Route::get('transaksis/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.show');
-        Route::put('transaksis/{transaksi}/status', [TransaksiController::class, 'updateStatus'])->name('transaksis.updateStatus');
+    Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
+    Route::get('transaksis/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.show');
+    Route::put('transaksis/{transaksi}/status', [TransaksiController::class, 'updateStatus'])->name('transaksis.updateStatus');
 
-        route::get('dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
-    });
+    route::get('dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 require __DIR__ . '/auth.php';

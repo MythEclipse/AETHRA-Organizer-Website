@@ -56,6 +56,10 @@
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                             Profile
                         </a>
+                        <a href="{{ route('my-transactions') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Transaksi Saya
+                        </a>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -109,6 +113,10 @@
                     class="hidden absolute left-4 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
                     <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Profile
+                    </a>
+                    <a href="{{ route('my-transactions') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Transaksi Saya
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}">
@@ -366,99 +374,32 @@
         </section>
 
         <section class="price py-12 px-4 md:px-[9%]" id="price">
-            <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
-                    class="text-primary">price</span></h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div
-                    class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105">
-                    <h3 class="bg-primary text-white py-4 text-2xl font-semibold">for birthdays</h3>
-                    <div class="p-6">
-                        <h3 class="text-white pt-4 text-5xl font-bold">$250.99</h3>
-                        <ul class="list-none py-4 space-y-3">
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>full
-                                services</li>
-                            <li class="text-lg text-gray-300"><i
-                                    class="fas fa-check text-primary pr-2"></i>decorations</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>music and
-                                photos</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>food and
-                                drinks</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>invitation
-                                card</li>
-                        </ul>
-                        <a href="#"
-                            class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">check
-                            out</a>
-                    </div>
-                </div>
-                <div
-                    class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105">
-                    <h3 class="bg-primary text-white py-4 text-2xl font-semibold">for weddings</h3>
-                    <div class="p-6">
-                        <h3 class="text-white pt-4 text-5xl font-bold">$450.99</h3>
-                        <ul class="list-none py-4 space-y-3">
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>full
-                                services</li>
-                            <li class="text-lg text-gray-300"><i
-                                    class="fas fa-check text-primary pr-2"></i>decorations</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>music and
-                                photos</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>food and
-                                drinks</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>invitation
-                                card</li>
-                        </ul>
-                        <a href="#"
-                            class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">check
-                            out</a>
-                    </div>
-                </div>
-                <div
-                    class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105">
-                    <h3 class="bg-primary text-white py-4 text-2xl font-semibold">for concerts</h3>
-                    <div class="p-6">
-                        <h3 class="text-white pt-4 text-5xl font-bold">$650.99</h3>
-                        <ul class="list-none py-4 space-y-3">
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>full
-                                services</li>
-                            <li class="text-lg text-gray-300"><i
-                                    class="fas fa-check text-primary pr-2"></i>decorations</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>music and
-                                photos</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>food and
-                                drinks</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>invitation
-                                card</li>
-                        </ul>
-                        <a href="#"
-                            class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">check
-                            out</a>
-                    </div>
-                </div>
-                <div
-                    class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105">
-                    <h3 class="bg-primary text-white py-4 text-2xl font-semibold">for others</h3>
-                    <div class="p-6">
-                        <h3 class="text-white pt-4 text-5xl font-bold">$850.99</h3>
-                        <ul class="list-none py-4 space-y-3">
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>full
-                                services</li>
-                            <li class="text-lg text-gray-300"><i
-                                    class="fas fa-check text-primary pr-2"></i>decorations</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>music and
-                                photos</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>food and
-                                drinks</li>
-                            <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>invitation
-                                card</li>
-                        </ul>
-                        <a href="#"
-                            class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">check
-                            out</a>
-                    </div>
-                </div>
+    <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span class="text-primary">price</span></h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        @forelse($pakets as $paket)
+        <div class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105 flex flex-col">
+            <h3 class="bg-primary text-white py-4 text-2xl font-semibold">{{ $paket->name }}</h3>
+            <div class="p-6 flex-grow flex flex-col">
+                <h3 class="text-white pt-4 text-5xl font-bold">Rp{{ number_format($paket->price / 1000) }}K</h3>
+                <ul class="list-none py-4 space-y-3 text-left flex-grow">
+                    @foreach ($paket->fiturs as $fitur)
+                        <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>{{ $fitur->name }}</li>
+                    @endforeach
+                </ul>
+                <a href="{{ route('checkout.show', $paket->id) }}" class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">
+                    Pesan Sekarang
+                </a>
             </div>
-        </section>
+        </div>
+        @empty
+        <div class="col-span-4 text-center text-white text-xl">
+            <p>Saat ini belum ada paket yang tersedia. Silakan cek kembali nanti.</p>
+        </div>
+        @endforelse
+
+    </div>
+</section>
 
         <section class="review py-12 px-4 md:px-[9%]" id="review">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">client's <span
