@@ -7,6 +7,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Admin\ServiceController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -35,5 +36,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('services', [ServiceController::class, 'index'])->name('services.index');
+    Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
 });
 require __DIR__ . '/auth.php';

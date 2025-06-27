@@ -197,48 +197,20 @@
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
                     class="text-primary">services</span></h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-map-marker-alt h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">venue selection</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-envelope h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">invitation card</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-music h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">entertainment</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-utensils h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">food and drinks</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-photo-video h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">photos and videos</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
-                <div class="rounded-lg bg-gray-800 text-center p-8">
-                    <i
-                        class="fas fa-birthday-cake h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
-                    <h3 class="text-2xl text-white py-4 font-semibold">custom food</h3>
-                    <p class="text-base text-gray-300 leading-relaxed">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Porro, suscipit.</p>
-                </div>
+
+                @forelse($services as $service)
+                    <div class="rounded-lg bg-gray-800 text-center p-8">
+                        <i
+                            class="{{ $service->icon }} h-20 w-20 leading-[5rem] inline-flex items-center justify-center rounded-full text-3xl bg-primary text-white"></i>
+                        <h3 class="text-2xl text-white py-4 font-semibold capitalize">{{ $service->title }}</h3>
+                        <p class="text-base text-gray-300 leading-relaxed">{{ $service->description }}</p>
+                    </div>
+                @empty
+                    <div class="col-span-full text-center text-white text-xl">
+                        Layanan kami akan segera tersedia.
+                    </div>
+                @endforelse
+
             </div>
         </section>
 
@@ -374,32 +346,37 @@
         </section>
 
         <section class="price py-12 px-4 md:px-[9%]" id="price">
-    <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span class="text-primary">price</span></h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
+                    class="text-primary">price</span></h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        @forelse($pakets as $paket)
-        <div class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105 flex flex-col">
-            <h3 class="bg-primary text-white py-4 text-2xl font-semibold">{{ $paket->name }}</h3>
-            <div class="p-6 flex-grow flex flex-col">
-                <h3 class="text-white pt-4 text-5xl font-bold">Rp{{ number_format($paket->price / 1000) }}K</h3>
-                <ul class="list-none py-4 space-y-3 text-left flex-grow">
-                    @foreach ($paket->fiturs as $fitur)
-                        <li class="text-lg text-gray-300"><i class="fas fa-check text-primary pr-2"></i>{{ $fitur->name }}</li>
-                    @endforeach
-                </ul>
-                <a href="{{ route('checkout.show', $paket->id) }}" class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">
-                    Pesan Sekarang
-                </a>
+                @forelse($pakets as $paket)
+                    <div
+                        class="bg-gray-800 rounded-lg text-center overflow-hidden transition-transform duration-200 hover:scale-105 flex flex-col">
+                        <h3 class="bg-primary text-white py-4 text-2xl font-semibold">{{ $paket->name }}</h3>
+                        <div class="p-6 flex-grow flex flex-col">
+                            <h3 class="text-white pt-4 text-5xl font-bold">
+                                Rp{{ number_format($paket->price / 1000) }}K</h3>
+                            <ul class="list-none py-4 space-y-3 text-left flex-grow">
+                                @foreach ($paket->fiturs as $fitur)
+                                    <li class="text-lg text-gray-300"><i
+                                            class="fas fa-check text-primary pr-2"></i>{{ $fitur->name }}</li>
+                                @endforeach
+                            </ul>
+                            <a href="{{ route('checkout.show', $paket->id) }}"
+                                class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">
+                                Pesan Sekarang
+                            </a>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-4 text-center text-white text-xl">
+                        <p>Saat ini belum ada paket yang tersedia. Silakan cek kembali nanti.</p>
+                    </div>
+                @endforelse
+
             </div>
-        </div>
-        @empty
-        <div class="col-span-4 text-center text-white text-xl">
-            <p>Saat ini belum ada paket yang tersedia. Silakan cek kembali nanti.</p>
-        </div>
-        @endforelse
-
-    </div>
-</section>
+        </section>
 
         <section class="review py-12 px-4 md:px-[9%]" id="review">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">client's <span
