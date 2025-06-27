@@ -26,5 +26,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
         Route::get('transaksis/{transaksi}', [TransaksiController::class, 'show'])->name('transaksis.show');
         Route::put('transaksis/{transaksi}/status', [TransaksiController::class, 'updateStatus'])->name('transaksis.updateStatus');
+
+        route::get('dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
     });
 require __DIR__ . '/auth.php';

@@ -21,7 +21,9 @@
         class="fixed top-0 left-0 right-0 z-50 bg-gray-800 flex items-center justify-between py-4 px-6 md:px-[9%] shadow-lg">
         <a href="#" class="text-white text-2xl font-bold"><span>A</span>ETHRA <span
                 class="text-primary">ORGANIZER</span></a>
-        <nav id="navbar" class="hidden lg:flex items-center space-x-8">
+
+        {{-- Navigasi untuk Desktop --}}
+        <nav id="navbar" class="hidden lg:flex items-center space-x-6">
             <a href="#home" class="text-lg text-white hover:text-primary transition-colors duration-200">Home</a>
             <a href="#service" class="text-lg text-white hover:text-primary transition-colors duration-200">Service</a>
             <a href="#about" class="text-lg text-white hover:text-primary transition-colors duration-200">About</a>
@@ -29,13 +31,59 @@
             <a href="#price" class="text-lg text-white hover:text-primary transition-colors duration-200">Price</a>
             <a href="#review" class="text-lg text-white hover:text-primary transition-colors duration-200">Review</a>
             <a href="#contact" class="text-lg text-white hover:text-primary transition-colors duration-200">Contact</a>
-            <a href="{{ route('login') }}"
-                class="text-lg text-white hover:text-primary transition-colors duration-200">Sign In</a>
+
+            {{-- Spacer untuk mendorong menu profil ke kanan --}}
+            <div class="w-px h-6 bg-gray-600 mx-2"></div>
+
+            {{-- Cek Otentikasi Pengguna --}}
+            @auth
+                {{-- Jika SUDAH login, tampilkan menu profil --}}
+                <div class="relative" id="desktop-profile-container">
+                    <button id="desktop-profile-button" class="flex items-center focus:outline-none">
+                        <img class="h-9 w-9 rounded-full object-cover"
+                            src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=random' }}"
+                            alt="{{ Auth::user()->name }}">
+                    </button>
+
+                    <div id="desktop-profile-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
+                        <div class="px-4 py-2 text-sm text-gray-700">
+                            <div class="font-medium">{{ Auth::user()->name }}</div>
+                            <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
+                        </div>
+                        <hr class="my-1">
+                        <a href="{{ route('profile.edit') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Profile
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                Sign Out
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            @else
+                {{-- Jika BELUM login, tampilkan tombol Sign In --}}
+                <a href="{{ route('login') }}"
+                    class="text-lg text-white bg-primary py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+                    Sign In
+                </a>
+            @endguest
         </nav>
+
+        {{-- Ikon Menu untuk Mobile --}}
         <div id="menu-bars" class="text-white text-3xl cursor-pointer lg:hidden">
             <i class="fas fa-bars"></i>
         </div>
     </header>
+
+    {{-- SCRIPT GABUNGAN: Tambahkan ini di bagian bawah halaman Anda (jika belum ada) --}}
+    {{-- Script ini sudah menangani menu mobile DAN desktop --}}
+
 
     <div id="mobile-menu" class="hidden lg:hidden fixed top-16 left-0 right-0 bg-gray-800 z-40 p-4">
         <a href="#home" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Home</a>
@@ -45,60 +93,97 @@
         <a href="#price" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Price</a>
         <a href="#review" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Review</a>
         <a href="#contact" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Contact</a>
-        <a href="{{ route('login') }}" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Sign
-            In</a>
+
+        {{-- Cek apakah pengguna sudah login --}}
+        @auth
+            {{-- Jika SUDAH login, tampilkan bagian profil --}}
+            <div class="relative mt-2" id="profile-menu-container">
+                <button id="profile-menu-button" class="flex items-center space-x-3 py-2 px-4 w-full">
+                    <img class="h-10 w-10 rounded-full object-cover"
+                        src="{{ Auth::user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=random' }}"
+                        alt="{{ Auth::user()->name }}">
+                    <span class="font-medium text-white">{{ Auth::user()->name }}</span>
+                </button>
+
+                <div id="profile-menu-dropdown"
+                    class="hidden absolute left-4 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
+                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Profile
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Sign Out
+                        </a>
+                    </form>
+                </div>
+            </div>
+        @else
+            {{-- Jika BELUM login, tampilkan tombol Sign In --}}
+            <a href="{{ route('login') }}" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">
+                Sign In
+            </a>
+        @endguest
     </div>
 
     <main class="pt-20">
 
-        <section class="home min-h-screen flex flex-col items-center justify-center text-center pt-24 pb-12" id="home">
-    <div class="content max-w-4xl mx-auto px-4">
-        <h3 class="text-white text-4xl md:text-6xl uppercase font-bold">it's time to celebrate! the best <span class="text-primary"> event organizers </span></h3>
-        <a href="#contact" class="mt-6 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">contact us</a>
-    </div>
-
-    <div class="swiper-container home-slider w-full mt-12">
-        <div class="swiper-wrapper items-center py-4">
-
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-1.jpg" alt="Wedding Event" class="w-full h-full object-cover">
-                </div>
+        <section class="home min-h-screen flex flex-col items-center justify-center text-center pt-24 pb-12"
+            id="home">
+            <div class="content max-w-4xl mx-auto px-4">
+                <h3 class="text-white text-4xl md:text-6xl uppercase font-bold">it's time to celebrate! the best <span
+                        class="text-primary"> event organizers </span></h3>
+                <a href="#contact"
+                    class="mt-6 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors">contact
+                    us</a>
             </div>
 
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-2.jpg" alt="Birthday Celebration" class="w-full h-full object-cover">
+            <div class="swiper-container home-slider w-full mt-12">
+                <div class="swiper-wrapper items-center py-4">
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-1.jpg" alt="Wedding Event" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-2.jpg" alt="Birthday Celebration"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-3.jpg" alt="Night Concert" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-4.jpg" alt="Outdoor Party" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-5.jpg" alt="Formal Gathering" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
+                        <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
+                            <img src="images/slide-6.jpg" alt="Festive Decoration"
+                                class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-3.jpg" alt="Night Concert" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-4.jpg" alt="Outdoor Party" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-5.jpg" alt="Formal Gathering" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <div class="swiper-slide w-10/12 max-w-xs sm:max-w-sm">
-                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-2xl">
-                    <img src="images/slide-6.jpg" alt="Festive Decoration" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
+        </section>
 
         <section class="service py-12 px-4 md:px-[9%]" id="service">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
@@ -589,6 +674,70 @@
                         slidesPerView: 3,
                     },
                 },
+            });
+        });
+    </script>
+    <script>
+        // Pastikan script dijalankan setelah DOM siap
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah elemen-elemennya ada sebelum menambahkan event listener
+            const profileButton = document.getElementById('profile-menu-button');
+            const profileDropdown = document.getElementById('profile-menu-dropdown');
+            const profileContainer = document.getElementById('profile-menu-container');
+
+            if (profileButton && profileDropdown && profileContainer) {
+                // Event listener untuk tombol profil
+                profileButton.addEventListener('click', function(event) {
+                    // Menghentikan event dari "menyebar" ke window
+                    event.stopPropagation();
+                    profileDropdown.classList.toggle('hidden');
+                });
+
+                // Event listener untuk menutup dropdown saat mengklik di luar area menu
+                window.addEventListener('click', function(event) {
+                    if (!profileContainer.contains(event.target)) {
+                        profileDropdown.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- LOGIKA UNTUK DROPDOWN PROFIL DESKTOP ---
+            const desktopButton = document.getElementById('desktop-profile-button');
+            const desktopDropdown = document.getElementById('desktop-profile-dropdown');
+            const desktopContainer = document.getElementById('desktop-profile-container');
+
+            if (desktopButton && desktopDropdown && desktopContainer) {
+                desktopButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    desktopDropdown.classList.toggle('hidden');
+                });
+            }
+
+            // --- LOGIKA UNTUK DROPDOWN PROFIL MOBILE ---
+            const mobileButton = document.getElementById('profile-menu-button');
+            const mobileDropdown = document.getElementById('profile-menu-dropdown');
+            const mobileContainer = document.getElementById('profile-menu-container');
+
+            if (mobileButton && mobileDropdown && mobileContainer) {
+                mobileButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    mobileDropdown.classList.toggle('hidden');
+                });
+            }
+
+            // --- LOGIKA UNTUK MENUTUP SEMUA DROPDOWN SAAT KLIK DI LUAR ---
+            window.addEventListener('click', function(event) {
+                // Tutup dropdown desktop jika klik di luarnya
+                if (desktopContainer && !desktopContainer.contains(event.target)) {
+                    desktopDropdown.classList.add('hidden');
+                }
+                // Tutup dropdown mobile jika klik di luarnya
+                if (mobileContainer && !mobileContainer.contains(event.target)) {
+                    mobileDropdown.classList.add('hidden');
+                }
             });
         });
     </script>
