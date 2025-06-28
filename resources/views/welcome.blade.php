@@ -246,110 +246,52 @@
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
                     class="text-primary">gallery</span></h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-1.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
+
+                @forelse($galleries as $gallery)
                     <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
+                        class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
+                        <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        <h3
+                            class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
+                            {{ $gallery->title }}
+                        </h3>
+                        <div
+                            class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
+                            <button class="like-btn text-2xl mx-2 text-white hover:text-primary"
+                                data-id="{{ $gallery->id }}">
+                                <i class="fas fa-heart"></i> <span
+                                    class="like-count text-base">{{ $gallery->likes }}</span>
+                            </button>
+                            <a href="https://api.whatsapp.com/send?text=Check out this awesome event photo! {{ url()->current() }}#gallery"
+                                target="_blank" class="text-2xl mx-2 text-white hover:text-primary">
+                                <i class="fas fa-share"></i>
+                            </a>
+                            <button class="view-btn text-2xl mx-2 text-white hover:text-primary"
+                                data-image="{{ Storage::url($gallery->image) }}" data-title="{{ $gallery->title }}"
+                                data-description="{{ $gallery->description }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-2.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
-                    <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </div>
-                </div>
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-3.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
-                    <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </div>
-                </div>
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-4.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
-                    <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </div>
-                </div>
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-5.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
-                    <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </div>
-                </div>
-                <div
-                    class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                    <img src="images/g-6.jpg" alt=""
-                        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:grayscale">
-                    <h3
-                        class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">
-                        photos and events</h3>
-                    <div
-                        class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-heart"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-share"></i></a>
-                        <a href="#" class="text-2xl mx-2 text-white hover:text-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </div>
-                </div>
+                @empty
+                    <p class="col-span-full text-center text-white">Galeri masih kosong.</p>
+                @endforelse
             </div>
         </section>
+
+        <div id="lightbox"
+            class="hidden fixed inset-0 bg-black bg-opacity-80 z-[10000] flex justify-center items-center p-4">
+            <div class="relative bg-white dark:bg-gray-900 rounded-lg max-w-4xl max-h-[90vh] shadow-lg">
+                <button id="close-lightbox"
+                    class="absolute -top-4 -right-4 h-10 w-10 bg-white text-black rounded-full text-2xl">&times;</button>
+                <img id="lightbox-img" src="" class="max-w-full max-h-[80vh] object-contain">
+                <div class="p-4 text-gray-900 dark:text-gray-100">
+                    <h3 id="lightbox-title" class="text-2xl font-bold"></h3>
+                    <p id="lightbox-description" class="mt-2"></p>
+                </div>
+            </div>
+        </div>
 
         <section class="price py-12 px-4 md:px-[9%]" id="price">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold">our <span
@@ -662,6 +604,58 @@
                 if (mobileContainer && !mobileContainer.contains(event.target)) {
                     mobileDropdown.classList.add('hidden');
                 }
+            });
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDesc = document.getElementById('lightbox-description');
+            const closeLightboxBtn = document.getElementById('close-lightbox');
+
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    lightboxImg.src = button.dataset.image;
+                    lightboxTitle.textContent = button.dataset.title;
+                    lightboxDesc.textContent = button.dataset.description;
+                    lightbox.classList.remove('hidden');
+                });
+            });
+
+            if (closeLightboxBtn) {
+                closeLightboxBtn.addEventListener('click', () => {
+                    lightbox.classList.add('hidden');
+                });
+            }
+
+            if (lightbox) {
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) {
+                        lightbox.classList.add('hidden');
+                    }
+                });
+            }
+
+            // --- LOGIKA UNTUK TOMBOL LIKE (AJAX) ---
+            document.querySelectorAll('.like-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const galleryId = this.dataset.id;
+                    const likeCountSpan = this.querySelector('.like-count');
+
+                    fetch(`/gallery/${galleryId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').getAttribute('content')
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.likes !== undefined) {
+                                likeCountSpan.textContent = data.likes;
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
             });
         });
     </script>

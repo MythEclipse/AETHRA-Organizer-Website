@@ -21,10 +21,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             ServiceSeeder::class,
+            AboutSeeder::class,
+            GallerySeeder::class,
         ]);
-        $this->call([
-        // ServiceSeeder::class, // (jika masih ada)
-        AboutSeeder::class,
-    ]);
     }
 }

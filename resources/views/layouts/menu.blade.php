@@ -44,6 +44,12 @@
                 <p>Edit About Us</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('galleries.index') }}" class="nav-link {{ request()->is('galleries*') ? 'active' : '' }}">
+                <i class="nav-icon far fa-image"></i>
+                <p>Manajemen Galeri</p>
+            </a>
+        </li>
     @endcan
     {{-- <li class="nav-header">AKUN</li>
 

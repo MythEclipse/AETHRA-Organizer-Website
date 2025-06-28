@@ -8,7 +8,8 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\GalleryController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -28,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('/my-transactions', [CheckoutController::class, 'myTransactions'])->name('my-transactions');
+
+    Route::resource('galleries', GalleryController::class);
 });
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
