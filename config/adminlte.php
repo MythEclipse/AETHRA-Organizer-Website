@@ -547,4 +547,10 @@ return [
     */
 
     'livewire' => false,
+    'middleware' => [
+        'web',
+        'auth',
+        'can:view_admin', // <-- Ini adalah bagian terpenting.
+                         // Ini memberitahu AdminLTE untuk menggunakan Gate 'view_admin'.
+    ],
 ];

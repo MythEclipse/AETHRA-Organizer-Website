@@ -111,18 +111,18 @@
                     <div class="table-responsive mailbox-messages">
                         <table class="table table-hover table-striped">
                             <tbody>
-                                @forelse($messages as $message)
-                                    <tr class="{{ !$message->is_read ? 'font-weight-bold' : '' }}">
+                                @forelse($conversations as $conversation)
+                                    <tr class="{{ !$conversation->is_read ? 'font-weight-bold' : '' }}">
                                         <td>
                                             <div class="icheck-primary">
-                                                <input type="checkbox" value="" id="check{{ $message->id }}">
-                                                <label for="check{{ $message->id }}"></label>
+                                                <input type="checkbox" value="" id="check{{ $conversation->id }}">
+                                                <label for="check{{ $conversation->id }}"></label>
                                             </div>
                                         </td>
                                         <td class="mailbox-star">
-                                            <button class="btn btn-link btn-xs star-btn p-0" data-id="{{ $message->id }}"
+                                            <button class="btn btn-link btn-xs star-btn p-0" data-id="{{ $conversation->id }}"
                                                 title="Tandai sebagai penting">
-                                                @if ($message->is_starred)
+                                                @if ($conversation->is_starred)
                                                     <i class="fas fa-star text-warning"></i>
                                                 @else
                                                     <i class="far fa-star text-warning"></i>
@@ -131,14 +131,14 @@
                                         </td>
                                         <td class="mailbox-name">
                                             <a
-                                                href="{{ route('admin.messages.show', $message->id) }}">{{ $message->name }}</a>
+                                                href="{{ route('admin.messages.show', $conversation->id) }}">{{ $conversation->name }}</a>
                                         </td>
                                         <td class="mailbox-subject">
-                                            <b>{{ $message->subject }}</b> -
-                                            {{ Str::limit(strip_tags($message->message), 40) }}
+                                            <b>{{ $conversation->subject }}</b> -
+                                            {{ Str::limit(strip_tags($conversation->message), 40) }}
                                         </td>
                                         <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">{{ $message->created_at->diffForHumans() }}</td>
+                                        <td class="mailbox-date">{{ $conversation->created_at->diffForHumans() }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -152,9 +152,9 @@
                 <div class="card-footer p-0">
                     <div class="mailbox-controls">
                         <div class="float-right py-2 px-3">
-                            {{ $messages->firstItem() }}-{{ $messages->lastItem() }}/{{ $messages->total() }}
+                            {{ $conversations->firstItem() }}-{{ $conversations->lastItem() }}/{{ $conversations->total() }}
                             <div class="btn-group">
-                                {{ $messages->links() }}
+                                {{ $conversations->links() }}
                             </div>
                         </div>
                     </div>

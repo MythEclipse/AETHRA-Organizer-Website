@@ -28,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) {
             return $user->role === 'admin';
         });
+        Gate::define('view_admin', function (User $user) {
+            // Izinkan akses jika kolom 'role' pada user bernilai 'admin'
+            return $user->role === 'admin';
+        });
     }
 }

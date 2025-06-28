@@ -48,22 +48,22 @@ class ContactController extends Controller
         }
 
         // Eksekusi query dengan pagination
-        $messages = $query->paginate(15);
+        $conversations = $query->paginate(15);
 
         $unreadCount = Conversation::where('is_read', false)->count();
 
         // Kirim juga filter saat ini ke view untuk menandai menu yang aktif
         $currentFilter = $request->filter;
 
-        return view('admin.messages.index', compact('messages', 'unreadCount', 'currentFilter'));
+        return view('admin.messages.index', compact('conversations', 'unreadCount', 'currentFilter'));
     }
-    public function toggleStar(Conversation $message)
+    public function toggleStar(Conversation $conversation)
     {
         // Ubah status is_starred menjadi kebalikannya (true -> false, false -> true)
-        $message->update(['is_starred' => !$message->is_starred]);
+        $conversation->update(['is_starred' => !$conversation->is_starred]);
 
         return response()->json([
-            'is_starred' => $message->is_starred
+            'is_starred' => $conversation->is_starred
         ]);
     }
 
@@ -72,9 +72,26 @@ class ContactController extends Controller
      */
     public function show(Request $request, Conversation $conversation)
     {
-        // Cek otorisasi, pastikan user hanya bisa melihat percakapannya sendiri
-        if (Auth::user()->id !== $conversation->user_id) {
-            abort(403);
+        // Tandai pesan sebagai sudah dibaca jika belum
+        if (!$conversation->is_read) {
+            $conversation->update(['is_read' => true]);
+        }
+
+        // Jika ada parameter notifikasi di URL, tandai sebagai sudah dibaca
+        if ($request->has('notify_id')) {
+            $notification = Auth::user()->notifications()->find($request->notify_id);
+            if ($notification) {
+                $notification->markAsRead();
+            }
+        }
+
+        return view('admin.messages.show', compact('conversation'));
+    }
+    public function showuser(Request $request, Conversation $conversation)
+    {
+        // Otorisasi: pastikan user hanya bisa melihat percakapannya sendiri
+        if (Auth::id() !== $conversation->user_id) {
+            abort(403, 'THIS ACTION IS UNAUTHORIZED.');
         }
 
         // Jika ada parameter notifikasi di URL, tandai sebagai sudah dibaca
@@ -92,16 +109,14 @@ class ContactController extends Controller
     {
         $request->validate(['message' => 'required|string']);
 
-        // Buat record balasan baru
         $reply = Conversation::create([
-            'parent_id' => $conversation->id,
-            'user_id' => $conversation->user_id, // Balasan ditujukan untuk user yang sama
-            'subject' => 'Re: ' . $conversation->subject,
-            'message' => $request->message,
-            'is_admin_reply' => true, // Tandai ini sebagai balasan admin
+            'parent_id'      => $conversation->id,
+            'user_id'        => $conversation->user_id, // Sekarang ini akan berisi ID user yang benar
+            'subject'        => 'Re: ' . $conversation->subject,
+            'message'        => $request->message,
+            'is_admin_reply' => true,
         ]);
 
-        // Kirim notifikasi ke user yang memulai percakapan
         $conversation->user->notify(new AdminReplyNotification($reply));
 
         return redirect()->back()->with('success', 'Balasan berhasil dikirim.');
@@ -109,9 +124,9 @@ class ContactController extends Controller
     /**
      * Menghapus pesan.
      */
-    public function destroy(Conversation $message)
+    public function destroy(Conversation $conversation)
     {
-        $message->delete();
+        $conversation->delete();
         return redirect()->route('admin.messages.index')->with('success', 'Pesan berhasil dihapus.');
     }
 }

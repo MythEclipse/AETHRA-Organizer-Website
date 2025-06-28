@@ -39,7 +39,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
-
 });
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
@@ -56,12 +55,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('about', [AboutController::class, 'index'])->name('about.index');
     Route::put('about', [AboutController::class, 'update'])->name('about.update');
 
-     Route::get('messages', [ContactController::class, 'index'])->name('messages.index');
-    Route::get('messages/{message}', [ContactController::class, 'show'])->name('messages.show');
-    Route::delete('messages/{message}', [ContactController::class, 'destroy'])->name('messages.destroy');
+    Route::get('conversations', [ContactController::class, 'index'])->name('messages.index');
+    Route::get('conversations/{conversation}', [ContactController::class, 'show'])->name('messages.show');
+    Route::delete('conversations/{conversation}', [ContactController::class, 'destroy'])->name('messages.destroy');
+    Route::post('conversations/{conversation}/reply', [ContactController::class, 'storeReply'])->name('messages.reply');
 
-     Route::post('messages/{message}/toggle-star', [ContactController::class, 'toggleStar'])->name('messages.toggleStar');
+    Route::post('messages/{message}/toggle-star', [ContactController::class, 'toggleStar'])->name('messages.toggleStar');
 
-     Route::post('messages/{message}/reply', [ContactController::class, 'storeReply'])->name('messages.reply');
 });
 require __DIR__ . '/auth.php';
