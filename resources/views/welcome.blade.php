@@ -250,7 +250,7 @@
                 @forelse($galleries as $gallery)
                     <div
                         class="group relative border-[1rem] border-gray-800 rounded-lg h-64 cursor-pointer overflow-hidden">
-                        <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}"
+                        <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title ?? 'Gallery Image' }}"
                             class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110">
                         <h3
                             class="absolute -top-full left-0 right-0 bg-gray-800/80 text-white text-center py-2 text-2xl transition-all duration-300 group-hover:top-0">

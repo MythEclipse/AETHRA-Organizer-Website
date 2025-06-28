@@ -36,7 +36,7 @@
                     <tr>
                         <td>{{ $galleries->firstItem() + $index }}</td>
                         <td>
-                            <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" class="img-thumbnail" width="120">
+                           <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title ?? 'Gallery Image' }}" class="img-thumbnail" width="120">
                         </td>
                         <td>{{ $gallery->title }}</td>
                         <td>{{ $gallery->likes }}</td>

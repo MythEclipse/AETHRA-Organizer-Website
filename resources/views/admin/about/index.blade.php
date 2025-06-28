@@ -33,7 +33,7 @@
                 <label for="image">Gambar</label>
                 <div class="mb-2">
                     @if($about->image)
-                        <img src="{{ Storage::url($about->image) }}" alt="About Image" style="max-height: 200px;">
+                        <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title ?? 'Gallery Image' }}" style="max-height: 200px;">
                     @endif
                 </div>
                 <input type="file" name="image" class="form-control-file">

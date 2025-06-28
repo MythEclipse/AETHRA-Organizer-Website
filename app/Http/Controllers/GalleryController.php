@@ -22,13 +22,18 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'description' => 'nullable|string',
         ]);
 
-        $imageUrl = $request->file('image')->store('galleries', 'public');
+        if ($request->hasFile('image')) {
+            $imageUrl = $request->file('image')->store('galleries', 'public');
+        } else {
+            return back()->withErrors(['image' => 'No image file uploaded.']);
+        }
 
         Gallery::create([
             'title' => $request->title,
@@ -60,7 +65,7 @@ class GalleryController extends Controller
                 Storage::disk('public')->delete($gallery->image);
             }
             // Simpan gambar baru
-            $gallery->profile_photo_path = $request->file('photo')->store('galleries', 'public');
+            $gallery->image = $request->file('image')->store('galleries', 'public');
         }
 
         $gallery->save($data);
