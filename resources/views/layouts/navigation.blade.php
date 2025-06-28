@@ -12,6 +12,9 @@
                     <x-nav-link :href="route('my-transactions')" :active="request()->routeIs('my-transactions')">
                         {{ __('Transaksi Saya') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('user.conversations.index')" :active="request()->routeIs('user.conversations.*')">
+                        {{ __('Pesan Saya') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profil Saya') }}
                     </x-nav-link>
@@ -39,7 +42,9 @@
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('Manage Account') }}
                         </div>
-
+                        <x-dropdown-link :href="route('user.conversations.index')">
+                            {{ __('Pesan Saya') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

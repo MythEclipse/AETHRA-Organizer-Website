@@ -1,6 +1,7 @@
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item">
-        <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}"
+            class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
         </a>
@@ -48,6 +49,13 @@
             <a href="{{ route('galleries.index') }}" class="nav-link {{ request()->is('galleries*') ? 'active' : '' }}">
                 <i class="nav-icon far fa-image"></i>
                 <p>Manajemen Galeri</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.users.index') }}"
+                class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users-cog"></i>
+                <p>Manajemen Pengguna</p>
             </a>
         </li>
         <li class="nav-item">

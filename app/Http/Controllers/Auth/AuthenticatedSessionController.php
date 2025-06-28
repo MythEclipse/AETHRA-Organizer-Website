@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         // 5. Jika bukan admin, gunakan perilaku default (arahkan ke dashboard biasa)
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('landing', absolute: false));
     }
 
     /**

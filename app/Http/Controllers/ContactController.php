@@ -39,8 +39,8 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
-        // Ambil semua pesan sebagai query builder
-        $query = Conversation::latest();
+        // Ambil semua pesan sebagai query builder, abaikan yang subject-nya diawali 'Re:'
+        $query = Conversation::where('subject', 'not like', 'Re:%')->latest();
 
         // Cek apakah ada parameter 'filter' di URL dan nilainya 'starred'
         if ($request->filter == 'starred') {
@@ -50,7 +50,9 @@ class ContactController extends Controller
         // Eksekusi query dengan pagination
         $conversations = $query->paginate(15);
 
-        $unreadCount = Conversation::where('is_read', false)->count();
+        $unreadCount = Conversation::where('is_read', false)
+            ->where('subject', 'not like', 'Re:%')
+            ->count();
 
         // Kirim juga filter saat ini ke view untuk menandai menu yang aktif
         $currentFilter = $request->filter;
@@ -109,14 +111,15 @@ class ContactController extends Controller
     {
         $request->validate(['message' => 'required|string']);
 
-        $reply = Conversation::create([
+          $reply = Conversation::create([
             'parent_id'      => $conversation->id,
-            'user_id'        => $conversation->user_id, // Sekarang ini akan berisi ID user yang benar
+            'user_id'        => $conversation->user_id, // Tetap user_id dari percakapan asli
+            'name'           => Auth::user()->name,      // <-- TAMBAHKAN NAMA ADMIN
+            'email'          => Auth::user()->email,     // <-- TAMBAHKAN EMAIL ADMIN
             'subject'        => 'Re: ' . $conversation->subject,
             'message'        => $request->message,
             'is_admin_reply' => true,
         ]);
-
         $conversation->user->notify(new AdminReplyNotification($reply));
 
         return redirect()->back()->with('success', 'Balasan berhasil dikirim.');
