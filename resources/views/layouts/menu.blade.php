@@ -50,6 +50,13 @@
                 <p>Manajemen Galeri</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.messages.index') }}"
+                class="nav-link {{ request()->is('admin/messages*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-envelope"></i>
+                <p>Pesan Masuk</p>
+            </a>
+        </li>
     @endcan
     {{-- <li class="nav-header">AKUN</li>
 

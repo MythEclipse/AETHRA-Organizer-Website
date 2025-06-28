@@ -15,6 +15,7 @@
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profil Saya') }}
                     </x-nav-link>
+
                 </div>
             </div>
 

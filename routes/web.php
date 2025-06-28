@@ -11,6 +11,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GalleryLikeController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -34,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('galleries', GalleryController::class);
 
     Route::post('/gallery/{gallery}/like', [GalleryLikeController::class, 'store'])->name('gallery.like');
+
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
+
 });
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');
@@ -49,5 +55,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('about', [AboutController::class, 'index'])->name('about.index');
     Route::put('about', [AboutController::class, 'update'])->name('about.update');
+
+     Route::get('messages', [ContactController::class, 'index'])->name('messages.index');
+    Route::get('messages/{message}', [ContactController::class, 'show'])->name('messages.show');
+    Route::delete('messages/{message}', [ContactController::class, 'destroy'])->name('messages.destroy');
+
+     Route::post('messages/{message}/toggle-star', [ContactController::class, 'toggleStar'])->name('messages.toggleStar');
+
+     Route::post('messages/{message}/reply', [ContactController::class, 'storeReply'])->name('messages.reply');
 });
 require __DIR__ . '/auth.php';

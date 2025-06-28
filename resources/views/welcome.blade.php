@@ -37,6 +37,46 @@
                 <a href="{{ route('admin.dashboard') }}"
                     class="text-lg text-white hover:text-primary transition-colors duration-200">Dashboard</a>
             @endcan
+            {{-- Di dalam <nav>, sebelum dropdown profil --}}
+            <div class="relative ms-3">
+                {{-- Tombol Lonceng --}}
+                <button id="notification-bell-button" type="button"
+                    class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span class="sr-only">Notifications</span>
+                    @if (auth()->user()->unreadNotifications->count())
+                        <div id="notification-badge"
+                            class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
+                            {{ auth()->user()->unreadNotifications->count() }}
+                        </div>
+                    @endif
+                </button>
+
+                <div id="notification-dropdown"
+                    class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                    <div
+                        class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
+                        <span>Notifikasi</span>
+                        <button id="mark-all-read-button"
+                            class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua
+                            sudah dibaca</button>
+                    </div>
+                    <div id="notification-list"
+                        class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
+                        @forelse(auth()->user()->unreadNotifications as $notification)
+                            <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
+                                class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <p class="font-semibold">{{ $notification->data['message'] }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    {{ $notification->created_at->diffForHumans() }}</p>
+                            </a>
+                        @empty
+                            <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
+                                baru.</div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
             {{-- Spacer untuk mendorong menu profil ke kanan --}}
             <div class="w-px h-6 bg-gray-600 mx-2"></div>
 
@@ -103,12 +143,53 @@
         <a href="#price" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Price</a>
         <a href="#review" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Review</a>
         <a href="#contact" class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Contact</a>
+
         @can('admin')
             {{-- Tautan Admin --}}
             <a href="{{ route('admin.dashboard') }}"
                 class="block text-white text-lg py-2 px-4 hover:bg-primary rounded-md">Dashboard</a>
         @endcan
         {{-- Cek apakah pengguna sudah login --}}
+        {{-- Di dalam <nav>, sebelum dropdown profil --}}
+        <div class="relative ms-3">
+            {{-- Tombol Lonceng --}}
+            <button id="notification-bell-button" type="button"
+                class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
+                <i class="fas fa-bell fa-lg"></i>
+                <span class="sr-only">Notifications</span>
+                @if (auth()->user()->unreadNotifications->count())
+                    <div id="notification-badge"
+                        class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </div>
+                @endif
+            </button>
+
+            <div id="notification-dropdown"
+                class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                <div
+                    class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
+                    <span>Notifikasi</span>
+                    <button id="mark-all-read-button"
+                        class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua sudah
+                        dibaca</button>
+                </div>
+                <div id="notification-list"
+                    class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
+                    @forelse(auth()->user()->unreadNotifications as $notification)
+                        <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
+                            class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <p class="font-semibold">{{ $notification->data['message'] }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                {{ $notification->created_at->diffForHumans() }}</p>
+                        </a>
+                    @empty
+                        <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
+                            baru.</div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
         @auth
             {{-- Jika SUDAH login, tampilkan bagian profil --}}
             <div class="relative mt-2" id="profile-menu-container">
@@ -121,7 +202,8 @@
 
                 <div id="profile-menu-dropdown"
                     class="hidden absolute left-4 mt-2 w-48 bg-white rounded-md shadow-lg z-50 py-1">
-                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <a href="{{ route('profile.edit') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Profile
                     </a>
                     <a href="{{ route('my-transactions') }}"
@@ -144,6 +226,7 @@
                 Sign In
             </a>
         @endguest
+
     </div>
 
     <main class="pt-20">
@@ -383,24 +466,54 @@
 
         <section class="contact py-12 px-4 md:px-[9%]" id="contact">
             <h1 class="text-center pb-8 text-white uppercase text-4xl font-bold"><span>contact</span> us</h1>
-            <form action="" class="max-w-3xl mx-auto text-center">
-                <div class="flex flex-wrap justify-between gap-4">
-                    <input type="text" placeholder="name"
-                        class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
-                    <input type="email" placeholder="email"
-                        class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
+
+            @auth
+                {{-- TAMPILKAN FORM JIKA PENGGUNA SUDAH LOGIN --}}
+                <form action="{{ route('contact.store') }}" method="POST" class="max-w-3xl mx-auto text-center">
+                    @csrf
+
+                    @if (session('success'))
+                        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                            role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <div class="flex flex-wrap justify-between gap-4">
+                        {{-- Nama dan Email terisi otomatis dan tidak bisa diubah --}}
+                        <input type="text" name="name" placeholder="Name" value="{{ auth()->user()->name }}"
+                            readonly
+                            class="w-full md:w-[48%] bg-gray-700 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 outline-none cursor-not-allowed">
+                        <input type="email" name="email" placeholder="Email" value="{{ auth()->user()->email }}"
+                            readonly
+                            class="w-full md:w-[48%] bg-gray-700 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 outline-none cursor-not-allowed">
+                    </div>
+
+                    <div class="flex flex-wrap justify-between gap-4">
+                        <input type="number" name="phone_number" placeholder="Number (Optional)"
+                            class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
+                        <input type="text" name="subject" placeholder="Subject" required
+                            class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
+                    </div>
+
+                    <textarea name="message" placeholder="Your Message" required cols="30" rows="10"
+                        class="w-full bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none resize-none"></textarea>
+
+                    <button type="submit"
+                        class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors cursor-pointer">
+                        Send Message
+                    </button>
+                </form>
+            @else
+                {{-- TAMPILKAN PESAN INI JIKA PENGGUNA BELUM LOGIN --}}
+                <div class="max-w-3xl mx-auto text-center bg-gray-800 p-10 rounded-lg">
+                    <p class="text-xl text-white">Anda harus login untuk dapat mengirim pesan kepada kami.</p>
+                    <a href="{{ route('login') }}"
+                        class="mt-6 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-primary text-white hover:bg-opacity-80 transition-colors">
+                        Login Sekarang
+                    </a>
                 </div>
-                <div class="flex flex-wrap justify-between gap-4">
-                    <input type="number" placeholder="number"
-                        class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
-                    <input type="text" placeholder="subject"
-                        class="w-full md:w-[48%] bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none">
-                </div>
-                <textarea name="" placeholder="your message" cols="30" rows="10"
-                    class="w-full bg-gray-800 rounded-lg p-4 my-2 text-lg text-white placeholder-gray-400 focus:bg-gray-700 outline-none resize-none"></textarea>
-                <input type="submit" value="send message"
-                    class="mt-4 inline-block py-3 px-8 text-lg font-semibold rounded-md bg-gray-700 text-white hover:bg-primary transition-colors cursor-pointer">
-            </form>
+            @endguest
         </section>
 
         <footer class="bg-gray-950 py-12 px-4 md:px-[9%]">
@@ -665,6 +778,58 @@
             });
         });
     </script>
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const bellButton = document.getElementById('notification-bell-button');
+                const dropdown = document.getElementById('notification-dropdown');
+                const markAllReadButton = document.getElementById('mark-all-read-button');
+                const notificationBadge = document.getElementById('notification-badge');
+                const notificationList = document.getElementById('notification-list');
+
+                if (bellButton && dropdown) {
+                    // Buka/tutup dropdown saat lonceng diklik
+                    bellButton.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        dropdown.classList.toggle('hidden');
+                    });
+
+                    // Tutup dropdown saat klik di luar area
+                    window.addEventListener('click', function(event) {
+                        if (!bellButton.contains(event.target) && !dropdown.contains(event.target)) {
+                            dropdown.classList.add('hidden');
+                        }
+                    });
+                }
+
+                // Aksi untuk tombol "Tandai semua sudah dibaca"
+                if(markAllReadButton) {
+                    markAllReadButton.addEventListener('click', function(event){
+                        event.preventDefault();
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                        fetch('{{ route("notifications.markAllRead") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success) {
+                                // Hilangkan badge angka
+                                if(notificationBadge) {
+                                    notificationBadge.style.display = 'none';
+                                }
+                                // Kosongkan list dan tampilkan pesan
+                                notificationList.innerHTML = '<div class="p-4 text-sm text-center text-gray-500">Tidak ada notifikasi baru.</div>';
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+                }
+            });
+        </script>
 </body>
 
 </html>
