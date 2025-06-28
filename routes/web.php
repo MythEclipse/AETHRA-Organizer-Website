@@ -10,6 +10,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\GalleryLikeController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-transactions', [CheckoutController::class, 'myTransactions'])->name('my-transactions');
 
     Route::resource('galleries', GalleryController::class);
+
+    Route::post('/gallery/{gallery}/like', [GalleryLikeController::class, 'store'])->name('gallery.like');
 });
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('transaksis', [TransaksiController::class, 'index'])->name('transaksis.index');

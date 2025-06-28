@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laravel</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -67,7 +68,8 @@
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); this.closest('form').submit();"
                                 class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 Sign Out
                             </a>
@@ -258,18 +260,22 @@
                         </h3>
                         <div
                             class="absolute -bottom-full left-0 right-0 bg-gray-800/80 text-center py-4 transition-all duration-300 group-hover:bottom-0">
-                            <button class="like-btn text-2xl mx-2 text-white hover:text-primary"
-                                data-id="{{ $gallery->id }}">
-                                <i class="fas fa-heart"></i> <span
-                                    class="like-count text-base">{{ $gallery->likes }}</span>
+
+                            <button class="like-btn text-2xl mx-2 text-white hover:text-primary focus:outline-none"
+                                data-id="{{ $gallery->id }}" title="Sukai">
+                                <i class="fas fa-heart"></i>
+                                {{-- Span ini untuk menampilkan jumlah like --}}
+                                <span class="like-count text-base align-top">{{ $gallery->likes }}</span>
                             </button>
-                            <a href="https://api.whatsapp.com/send?text=Check out this awesome event photo! {{ url()->current() }}#gallery"
-                                target="_blank" class="text-2xl mx-2 text-white hover:text-primary">
+
+                            <a href="https://api.whatsapp.com/send?text=Lihat foto event keren ini! {{ route('landing') }}#gallery"
+                                target="_blank" class="text-2xl mx-2 text-white hover:text-primary" title="Bagikan">
                                 <i class="fas fa-share"></i>
                             </a>
-                            <button class="view-btn text-2xl mx-2 text-white hover:text-primary"
-                                data-image="{{ Storage::url($gallery->image) }}" data-title="{{ $gallery->title }}"
-                                data-description="{{ $gallery->description }}">
+
+                            <button class="view-btn text-2xl mx-2 text-white hover:text-primary focus:outline-none"
+                                data-image="{{ $gallery->image_url }}" data-title="{{ $gallery->title }}"
+                                data-description="{{ $gallery->description }}" title="Lihat Detail">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
