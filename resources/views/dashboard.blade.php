@@ -94,7 +94,7 @@
                 </ul>
             </div>
             <div class="card-footer text-center">
-                <a href="#">Lihat Semua Pengguna</a>
+                <a href="{{ route('admin.users.index') }}">Lihat Semua Pengguna</a>
             </div>
         </div>
     </div>
