@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
         // ... (route my-transactions jika ada)
         Route::get('/conversations', [UserConversationController::class, 'index'])->name('conversations.index');
         Route::get('/conversations/{conversation}', [UserConversationController::class, 'show'])->name('conversations.show');
+
+         Route::post('/conversations/{conversation}/reply', [UserConversationController::class, 'storeReply'])->name('conversations.reply');
     });
 });
 Route::prefix('admin')->name('admin.')->group(function () {

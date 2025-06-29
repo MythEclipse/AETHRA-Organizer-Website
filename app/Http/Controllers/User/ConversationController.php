@@ -42,4 +42,32 @@ class ConversationController extends Controller
 
         return view('user.conversations.show', compact('conversation'));
     }
+    public function storeReply(Request $request, Conversation $conversation)
+    {
+        // Otorisasi: pastikan hanya pemilik percakapan yang bisa membalas
+        if (Auth::id() !== $conversation->user_id) {
+            abort(403);
+        }
+
+        // Validasi input
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        // Buat record balasan baru
+        Conversation::create([
+            'parent_id'      => $conversation->id,
+            'user_id'        => Auth::id(),
+            'name'           => Auth::user()->name,
+            'email'          => Auth::user()->email,
+            'subject'        => $conversation->subject, // Subjek mengikuti pesan utama
+            'message'        => $request->message,
+            'is_admin_reply' => false, // Tandai ini sebagai balasan dari user
+        ]);
+
+        // Tandai pesan utama sebagai "belum dibaca" lagi oleh admin
+        $conversation->update(['is_read' => false]);
+
+        return redirect()->back()->with('success', 'Balasan Anda telah terkirim.');
+    }
 }

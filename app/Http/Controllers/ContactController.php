@@ -132,4 +132,5 @@ class ContactController extends Controller
         $conversation->delete();
         return redirect()->route('admin.messages.index')->with('success', 'Pesan berhasil dihapus.');
     }
+     
 }
