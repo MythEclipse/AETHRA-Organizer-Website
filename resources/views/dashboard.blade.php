@@ -103,62 +103,72 @@
 
 @push('scripts')
 <script>
+// Kita gunakan jQuery-style ready function dari AdminLTE
 $(function () {
   'use strict'
 
-  var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
+  // Pastikan variabel dari PHP ada isinya sebelum membuat chart
+  const salesLabels = @json($salesLabels ?? []);
+  const salesValues = @json($salesValues ?? []);
 
-  var salesChartData = {
-    // Mengambil data label (bulan) dari controller
-    labels: @json($salesLabels),
-    datasets: [
-      {
-        label: 'Pendapatan',
-        backgroundColor: 'rgba(60,141,188,0.9)',
-        borderColor: 'rgba(60,141,188,0.8)',
-        pointRadius: false,
-        pointColor: '#3b8bba',
-        pointStrokeColor: 'rgba(60,141,188,1)',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
-        // Mengambil data nilai (total pendapatan) dari controller
-        data: @json($salesValues)
-      }
-    ]
-  }
+  if (salesLabels.length > 0 && salesValues.length > 0) {
+      const salesChartCanvas = $('#salesChart').get(0).getContext('2d');
 
-  var salesChartOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          display: false
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          display: false
-        },
-        // Callback untuk format Rupiah di sumbu Y
-        ticks: {
-          callback: function (value, index, values) {
-            return 'Rp ' + new Intl.NumberFormat().format(value);
+      const salesChartData = {
+        labels: salesLabels,
+        datasets: [
+          {
+            label: 'Pendapatan',
+            backgroundColor: 'rgba(60,141,188,0.2)',
+            borderColor: 'rgba(60,141,188,1)',
+            pointRadius: 5,
+            pointColor: '#3b8bba',
+            pointStrokeColor: 'rgba(60,141,188,1)',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data: salesValues,
+            fill: true,
+            tension: 0.3 // Membuat garis lebih melengkung
           }
-        }
-      }]
-    }
-  }
+        ]
+      };
 
-  // This will get the chart type from the string in a dynamically
-  var salesChart = new Chart(salesChartCanvas, {
-    type: 'line',
-    data: salesChartData,
-    options: salesChartOptions
-  })
+      const salesChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                grid: {
+                    display: true, // Garis bantu horizontal
+                    borderColor: '#444',
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    // Callback untuk format Rupiah di sumbu Y
+                    callback: function (value) {
+                        return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+                    }
+                }
+            }
+        }
+      };
+
+      new Chart(salesChartCanvas, {
+        type: 'line',
+        data: salesChartData,
+        options: salesChartOptions
+      });
+  }
 })
 </script>
 @endpush

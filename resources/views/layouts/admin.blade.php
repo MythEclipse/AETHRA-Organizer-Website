@@ -113,6 +113,8 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     {{-- AdminLTE App --}}
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @stack('scripts')
 
