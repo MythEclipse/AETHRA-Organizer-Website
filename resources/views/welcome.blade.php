@@ -20,8 +20,10 @@
 
     <header
         class="fixed top-0 left-0 right-0 z-50 bg-gray-800 flex items-center justify-between py-4 px-6 md:px-[9%] shadow-lg">
-        <a href="#" class="text-white text-2xl font-bold"><span>A</span>ETHRA <span
-                class="text-primary">ORGANIZER</span></a>
+        <a href="#" class="flex items-center space-x-3 text-white text-2xl font-bold">
+            <img src="{{ asset('images/logoaethra.png') }}" alt="Aethra Logo" class="h-11 w-11 object-contain">
+            <span><span>A</span>ETHRA <span class="text-primary">ORGANIZER</span></span>
+        </a>
 
         {{-- Navigasi untuk Desktop --}}
         <nav id="navbar" class="hidden lg:flex items-center space-x-6">
