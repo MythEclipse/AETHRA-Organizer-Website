@@ -38,45 +38,47 @@
                     class="text-lg text-white hover:text-primary transition-colors duration-200">Dashboard</a>
             @endcan
             {{-- Di dalam <nav>, sebelum dropdown profil --}}
-            <div class="relative ms-3">
-                {{-- Tombol Lonceng --}}
-                <button id="notification-bell-button" type="button"
-                    class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
-                    <i class="fas fa-bell fa-lg"></i>
-                    <span class="sr-only">Notifications</span>
-                    @if (auth()->user()->unreadNotifications->count())
-                        <div id="notification-badge"
-                            class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
-                            {{ auth()->user()->unreadNotifications->count() }}
-                        </div>
-                    @endif
-                </button>
+            @auth
+                <div class="relative ms-3">
+                    {{-- Tombol Lonceng --}}
+                    <button id="notification-bell-button" type="button"
+                        class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fas fa-bell fa-lg"></i>
+                        <span class="sr-only">Notifications</span>
+                        @if (auth()->user()->unreadNotifications->count())
+                            <div id="notification-badge"
+                                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </div>
+                        @endif
+                    </button>
 
-                <div id="notification-dropdown"
-                    class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                    <div
-                        class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
-                        <span>Notifikasi</span>
-                        <button id="mark-all-read-button"
-                            class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua
-                            sudah dibaca</button>
-                    </div>
-                    <div id="notification-list"
-                        class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
-                        @forelse(auth()->user()->unreadNotifications as $notification)
-                            <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
-                                class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <p class="font-semibold">{{ $notification->data['message'] }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    {{ $notification->created_at->diffForHumans() }}</p>
-                            </a>
-                        @empty
-                            <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
-                                baru.</div>
-                        @endforelse
+                    <div id="notification-dropdown"
+                        class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                        <div
+                            class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
+                            <span>Notifikasi</span>
+                            <button id="mark-all-read-button"
+                                class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua
+                                sudah dibaca</button>
+                        </div>
+                        <div id="notification-list"
+                            class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
+                            @forelse(auth()->user()->unreadNotifications as $notification)
+                                <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
+                                    class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <p class="font-semibold">{{ $notification->data['message'] }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                        {{ $notification->created_at->diffForHumans() }}</p>
+                                </a>
+                            @empty
+                                <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
+                                    baru.</div>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endauth
             {{-- Spacer untuk mendorong menu profil ke kanan --}}
             <div class="w-px h-6 bg-gray-600 mx-2"></div>
 
@@ -151,45 +153,49 @@
         @endcan
         {{-- Cek apakah pengguna sudah login --}}
         {{-- Di dalam <nav>, sebelum dropdown profil --}}
-        <div class="relative ms-3">
-            {{-- Tombol Lonceng --}}
-            <button id="notification-bell-button" type="button"
-                class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
-                <i class="fas fa-bell fa-lg"></i>
-                <span class="sr-only">Notifications</span>
-                @if (auth()->user()->unreadNotifications->count())
-                    <div id="notification-badge"
-                        class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
-                        {{ auth()->user()->unreadNotifications->count() }}
-                    </div>
-                @endif
-            </button>
+        @auth
 
-            <div id="notification-dropdown"
-                class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                <div
-                    class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
-                    <span>Notifikasi</span>
-                    <button id="mark-all-read-button"
-                        class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua sudah
-                        dibaca</button>
-                </div>
-                <div id="notification-list"
-                    class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
-                    @forelse(auth()->user()->unreadNotifications as $notification)
-                        <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
-                            class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <p class="font-semibold">{{ $notification->data['message'] }}</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                {{ $notification->created_at->diffForHumans() }}</p>
-                        </a>
-                    @empty
-                        <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
-                            baru.</div>
-                    @endforelse
+
+            <div class="relative ms-3">
+                {{-- Tombol Lonceng --}}
+                <button id="notification-bell-button" type="button"
+                    class="relative inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 hover:text-white focus:outline-none">
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span class="sr-only">Notifications</span>
+                    @if (auth()->user()->unreadNotifications->count())
+                        <div id="notification-badge"
+                            class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-gray-800 rounded-full -top-1 -end-1">
+                            {{ auth()->user()->unreadNotifications->count() }}
+                        </div>
+                    @endif
+                </button>
+
+                <div id="notification-dropdown"
+                    class="hidden absolute right-0 mt-2 w-80 md:w-96 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                    <div
+                        class="p-3 font-bold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700 flex justify-between items-center">
+                        <span>Notifikasi</span>
+                        <button id="mark-all-read-button"
+                            class="text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline">Tandai semua sudah
+                            dibaca</button>
+                    </div>
+                    <div id="notification-list"
+                        class="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
+                        @forelse(auth()->user()->unreadNotifications as $notification)
+                            <a href="{{ $notification->data['url'] }}?notify_id={{ $notification->id }}"
+                                class="block px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <p class="font-semibold">{{ $notification->data['message'] }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    {{ $notification->created_at->diffForHumans() }}</p>
+                            </a>
+                        @empty
+                            <div class="p-4 text-sm text-center text-gray-500 dark:text-gray-400">Tidak ada notifikasi
+                                baru.</div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
-        </div>
+        @endauth
         @auth
             {{-- Jika SUDAH login, tampilkan bagian profil --}}
             <div class="relative mt-2" id="profile-menu-container">
@@ -779,35 +785,36 @@
         });
     </script>
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const bellButton = document.getElementById('notification-bell-button');
-                const dropdown = document.getElementById('notification-dropdown');
-                const markAllReadButton = document.getElementById('mark-all-read-button');
-                const notificationBadge = document.getElementById('notification-badge');
-                const notificationList = document.getElementById('notification-list');
+        document.addEventListener('DOMContentLoaded', function() {
+            const bellButton = document.getElementById('notification-bell-button');
+            const dropdown = document.getElementById('notification-dropdown');
+            const markAllReadButton = document.getElementById('mark-all-read-button');
+            const notificationBadge = document.getElementById('notification-badge');
+            const notificationList = document.getElementById('notification-list');
 
-                if (bellButton && dropdown) {
-                    // Buka/tutup dropdown saat lonceng diklik
-                    bellButton.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                        dropdown.classList.toggle('hidden');
-                    });
+            if (bellButton && dropdown) {
+                // Buka/tutup dropdown saat lonceng diklik
+                bellButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    dropdown.classList.toggle('hidden');
+                });
 
-                    // Tutup dropdown saat klik di luar area
-                    window.addEventListener('click', function(event) {
-                        if (!bellButton.contains(event.target) && !dropdown.contains(event.target)) {
-                            dropdown.classList.add('hidden');
-                        }
-                    });
-                }
+                // Tutup dropdown saat klik di luar area
+                window.addEventListener('click', function(event) {
+                    if (!bellButton.contains(event.target) && !dropdown.contains(event.target)) {
+                        dropdown.classList.add('hidden');
+                    }
+                });
+            }
 
-                // Aksi untuk tombol "Tandai semua sudah dibaca"
-                if(markAllReadButton) {
-                    markAllReadButton.addEventListener('click', function(event){
-                        event.preventDefault();
-                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            // Aksi untuk tombol "Tandai semua sudah dibaca"
+            if (markAllReadButton) {
+                markAllReadButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
 
-                        fetch('{{ route("notifications.markAllRead") }}', {
+                    fetch('{{ route('notifications.markAllRead') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -816,20 +823,21 @@
                         })
                         .then(response => response.json())
                         .then(data => {
-                            if(data.success) {
+                            if (data.success) {
                                 // Hilangkan badge angka
-                                if(notificationBadge) {
+                                if (notificationBadge) {
                                     notificationBadge.style.display = 'none';
                                 }
                                 // Kosongkan list dan tampilkan pesan
-                                notificationList.innerHTML = '<div class="p-4 text-sm text-center text-gray-500">Tidak ada notifikasi baru.</div>';
+                                notificationList.innerHTML =
+                                    '<div class="p-4 text-sm text-center text-gray-500">Tidak ada notifikasi baru.</div>';
                             }
                         })
                         .catch(error => console.error('Error:', error));
-                    });
-                }
-            });
-        </script>
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
