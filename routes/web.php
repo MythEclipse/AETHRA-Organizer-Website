@@ -69,5 +69,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('conversations/{conversation}', [AdminConversationController::class, 'destroy'])->name('messages.destroy');
     Route::post('conversations/{conversation}/toggle-star', [AdminConversationController::class, 'toggleStar'])->name('messages.toggleStar');
     Route::get('conversations/check-new', [AdminConversationController::class, 'checkNewMessages'])->name('messages.checkNew');
+
+    Route::get('conversations/trash', [AdminConversationController::class, 'trash'])->name('messages.trash');
+    Route::post('conversations/{id}/restore', [AdminConversationController::class, 'restore'])->name('messages.restore');
+    Route::delete('conversations/{id}/force-delete', [AdminConversationController::class, 'forceDelete'])->name('messages.forceDelete');
 });
 require __DIR__ . '/auth.php';

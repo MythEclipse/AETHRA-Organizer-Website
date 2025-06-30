@@ -61,16 +61,45 @@ class ConversationController extends Controller
         return response()->json(['is_starred' => $conversation->is_starred]);
     }
 
-    public function destroy(Conversation $conversation)
-    {
-        $conversation->delete();
-        return redirect()->route('admin.messages.index')->with('success', 'Percakapan berhasil dihapus.');
-    }
 
     public function checkNewMessages()
     {
         // PERBAIKAN: Gunakan whereNull('parent_id')
         $unreadCount = Conversation::whereNull('parent_id')->where('is_read', false)->count();
         return response()->json(['unread_count' => $unreadCount]);
+    }
+    public function destroy(Conversation $conversation)
+    {
+        $conversation->delete(); // Ini sekarang akan melakukan soft delete
+        return redirect()->route('admin.messages.index')->with('success', 'Percakapan berhasil dipindahkan ke Trash.');
+    }
+
+    /**
+     * Menampilkan daftar percakapan yang sudah di-soft-delete.
+     */
+    public function trash()
+    {
+        $messages = Conversation::onlyTrashed()->whereNull('parent_id')->latest()->paginate(15);
+        return view('admin.messages.trash', compact('messages'));
+    }
+
+    /**
+     * Mengembalikan percakapan dari trash.
+     */
+    public function restore($id)
+    {
+        $conversation = Conversation::onlyTrashed()->findOrFail($id);
+        $conversation->restore();
+        return redirect()->route('admin.messages.trash')->with('success', 'Percakapan berhasil dipulihkan.');
+    }
+
+    /**
+     * Menghapus percakapan secara permanen dari database.
+     */
+    public function forceDelete($id)
+    {
+        $conversation = Conversation::onlyTrashed()->findOrFail($id);
+        $conversation->forceDelete();
+        return redirect()->route('admin.messages.trash')->with('success', 'Percakapan berhasil dihapus selamanya.');
     }
 }
