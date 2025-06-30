@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Laravel</title>
+    <title>Aethra Organizer</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -437,9 +437,9 @@
                                 <span class="text-lg text-gray-400">happy clients</span>
                             </div>
                         </div>
-                        <p class="leading-loose text-gray-300 text-lg">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Corporis dolor dicta cum. Eos beatae eligendi, magni numquam nemo sed ut
-                            corrupti.</p>
+                        <p class="leading-loose text-gray-300 text-lg">teman teman ayo pilih aethra organizer ini EO baru tapi bagus bisa all x-responsive-nav-link
+                            harga terjangkau, pelayanan ramah, dan profesional. sukses selalu aethra organizer
+                        </p>
                     </div>
                     <div class="swiper-slide p-8 rounded-lg bg-gray-800 relative">
                         <i class="fas fa-quote-right absolute top-6 right-6 text-primary text-6xl opacity-30"></i>
@@ -450,9 +450,9 @@
                                 <span class="text-lg text-gray-400">happy clients</span>
                             </div>
                         </div>
-                        <p class="leading-loose text-gray-300 text-lg">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Corporis dolor dicta cum. Eos beatae eligendi, magni numquam nemo sed ut
-                            corrupti.</p>
+                        <p class="leading-loose text-gray-300 text-lg">wawalnya sih bingung saya cari kemana ya untuk acara birthday sodara saya
+                            ternyata aetrha organizer juga bisa, terimakasih telah ,engelola acara saya dengan baik dan profesional
+                        </p>
                     </div>
                     <div class="swiper-slide p-8 rounded-lg bg-gray-800 relative">
                         <i class="fas fa-quote-right absolute top-6 right-6 text-primary text-6xl opacity-30"></i>
@@ -463,9 +463,33 @@
                                 <span class="text-lg text-gray-400">happy clients</span>
                             </div>
                         </div>
-                        <p class="leading-loose text-gray-300 text-lg">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Corporis dolor dicta cum. Eos beatae eligendi, magni numquam nemo sed ut
-                            corrupti.</p>
+                        <p class="leading-loose text-gray-300 text-lg">ga nyesel sih dapet rekomendasi dari temen, ternyata bagus dan profesional
+                            waktu awal sih harganya murah, admin aethra naikan value kalian karna ini sangat bagus pelayanan nya
+                        </p>
+                    </div>
+                    <div class="swiper-slide p-8 rounded-lg bg-gray-800 relative">
+                        <i class="fas fa-quote-right absolute top-6 right-6 text-primary text-6xl opacity-30"></i>
+                        <div class="flex items-center gap-4 pb-4">
+                            <img src="images/pic-3.png" alt="" class="h-20 w-20 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-2xl text-white">john deo</h3>
+                                <span class="text-lg text-gray-400">happy clients</span>
+                            </div>
+                        </div>
+                        <p class="leading-loose text-gray-300 text-lg">AETHRA ORGANIZER best dalam pelayanan, dan dalam action pun sigap gercep
+                            laporan pertanggung jawaban oke sesuai dengan RAB yang sudah disepakati. terimakasih
+                        </p>
+                    </div>
+                    <div class="swiper-slide p-8 rounded-lg bg-gray-800 relative">
+                        <i class="fas fa-quote-right absolute top-6 right-6 text-primary text-6xl opacity-30"></i>
+                        <div class="flex items-center gap-4 pb-4">
+                            <img src="images/pic-3.png" alt="" class="h-20 w-20 rounded-full object-cover">
+                            <div>
+                                <h3 class="text-2xl text-white">john deo</h3>
+                                <span class="text-lg text-gray-400">happy clients</span>
+                            </div>
+                        </div>
+                        <p class="leading-loose text-gray-300 text-lg">Mantap pelayanan sangat oke, profesional dan cekatan</p>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -557,7 +581,9 @@
                             class="fab fa-facebook-f text-primary pr-2"></i> facebook </a>
                     <a href="#" class="block text-lg py-1 text-gray-300 hover:text-primary"><i
                             class="fab fa-twitter text-primary pr-2"></i> twitter </a>
-                    <a href="#" class="block text-lg py-1 text-gray-300 hover:text-primary"><i
+                             <a href="#" class="block text-lg py-1 text-gray-300 hover:text-primary"><i
+                            class="fab fa-tiktok text-primary pr-2"></i> tiktok </a>
+                    <a href="https://www.instagram.com/aethra.organizer?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="block text-lg py-1 text-gray-300 hover:text-primary"><i
                             class="fab fa-instagram text-primary pr-2"></i> instagram </a>
                 </div>
             </div>
@@ -818,6 +844,7 @@
 
                     fetch('{{ route('notifications.markAllRead') }}', {
                             method: 'POST',
+                            // Add a comma here if there are other properties before headers
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': csrfToken
