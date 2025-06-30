@@ -34,7 +34,7 @@
                 <div class="table-responsive mailbox-messages">
                     <table class="table table-hover table-striped">
                         <tbody>
-                            @forelse($messages as $message)
+                            @forelse($conversation as $message)
                             <tr>
                                 <td>{{ $message->user->name }}</td>
                                 <td><b>{{ $message->subject }}</b> - {{ Str::limit(strip_tags($message->message), 40) }}</td>
@@ -62,7 +62,7 @@
             </div>
             <div class="card-footer p-0">
                 <div class="mailbox-controls">
-                    <div class="float-right py-2 px-3">{{ $messages->links() }}</div>
+                    <div class="float-right py-2 px-3">{{ $conversation->links() }}</div>
                 </div>
             </div>
         </div>

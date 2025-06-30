@@ -64,12 +64,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('about', [AboutController::class, 'update'])->name('about.update');
     Route::resource('users', UserController::class);
     Route::get('conversations', [AdminConversationController::class, 'index'])->name('messages.index');
-    Route::get('conversations/{conversation}', [AdminConversationController::class, 'show'])->name('messages.show');
+    Route::get('conversations/{conversation}', [AdminConversationController::class, 'show'])->where('conversation', '[0-9]+')->name('messages.show');
     Route::post('conversations/{conversation}/reply', [AdminConversationController::class, 'storeReply'])->name('messages.reply');
     Route::delete('conversations/{conversation}', [AdminConversationController::class, 'destroy'])->name('messages.destroy');
     Route::post('conversations/{conversation}/toggle-star', [AdminConversationController::class, 'toggleStar'])->name('messages.toggleStar');
     Route::get('conversations/check-new', [AdminConversationController::class, 'checkNewMessages'])->name('messages.checkNew');
-
     Route::get('conversations/trash', [AdminConversationController::class, 'trash'])->name('messages.trash');
     Route::post('conversations/{id}/restore', [AdminConversationController::class, 'restore'])->name('messages.restore');
     Route::delete('conversations/{id}/force-delete', [AdminConversationController::class, 'forceDelete'])->name('messages.forceDelete');

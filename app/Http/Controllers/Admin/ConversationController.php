@@ -79,8 +79,8 @@ class ConversationController extends Controller
      */
     public function trash()
     {
-        $messages = Conversation::onlyTrashed()->whereNull('parent_id')->latest()->paginate(15);
-        return view('admin.messages.trash', compact('messages'));
+        $conversation = Conversation::onlyTrashed()->whereNull('parent_id')->latest()->paginate(15);
+        return view('admin.messages.trash', compact('conversation'));
     }
 
     /**
