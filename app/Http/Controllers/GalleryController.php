@@ -68,7 +68,7 @@ class GalleryController extends Controller
             $gallery->image = $request->file('image')->store('galleries', 'public');
         }
 
-        $gallery->save($data);
+        $gallery->update($data);
         return redirect()->route('galleries.index')->with('success', 'Item galeri berhasil diperbarui.');
     }
 

@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const starIcon = this.querySelector('i');
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            fetch(`/admin/messages/${messageId}/toggle-star`, {
+            fetch(`/admin/conversations/${messageId}/toggle-star`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken }
             })
