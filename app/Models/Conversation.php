@@ -6,10 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     protected $guarded = []; // Izinkan semua diisi untuk kemudahan
 
-    public function user() { return $this->belongsTo(User::class); }
-    public function parent() { return $this->belongsTo(Conversation::class, 'parent_id'); }
-    public function replies() { return $this->hasMany(Conversation::class, 'parent_id'); }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Conversation::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Conversation::class, 'parent_id');
+    }
+
+    /**
+     * Scope a query to only include unread messages.
+     */
+    public function scopeUnread($query)
+    {
+        return $query->where('is_read', false);
+    }
 }
