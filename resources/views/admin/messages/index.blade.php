@@ -219,7 +219,7 @@
             }
 
             // Jalankan pengecekan setiap 30 detik
-            setInterval(checkForNewMessages, 1000);
+            setInterval(checkForNewMessages, 30000);
         });
     </script>
 @endpush

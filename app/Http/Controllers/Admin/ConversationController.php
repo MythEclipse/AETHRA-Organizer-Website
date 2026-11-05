@@ -39,7 +39,9 @@ class ConversationController extends Controller
 
     public function storeReply(Request $request, Conversation $conversation)
     {
-        $request->validate(['message' => 'required|string']);
+        $request->validate([
+            'message' => 'required|string|max:500',
+        ]);
 
         $reply = Conversation::create([
             'parent_id'      => $conversation->id,
@@ -71,7 +73,9 @@ class ConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         $conversation->delete(); // Ini sekarang akan melakukan soft delete
-        return redirect()->route('admin.messages.index')->with('success', 'Percakapan berhasil dipindahkan ke Trash.');
+
+        return redirect()->route('admin.messages.index')
+            ->with('success', 'Pesan berhasil dipindahkan ke Trash.');
     }
 
     /**
