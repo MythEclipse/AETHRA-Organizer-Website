@@ -32,7 +32,7 @@
                     </tr>
                     <tr>
                         <th>Metode Pembayaran</th>
-                        <td>{{ $transaksi->payment_method ?? 'Belum ditentukan' }}</td>
+                        <td>{{ $transaksi->payment_method ?? 'BRI (AETHRA ORGANIZER) 00212398900' }}</td>
                     </tr>
                 </table>
 
