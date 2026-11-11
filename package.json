@@ -19,6 +19,6 @@
         "vite": "^6.4.5"
     },
     "dependencies": {
-        "swiper": "^12.1.2"
+        "swiper": "^14.4.0"
     }
 }
